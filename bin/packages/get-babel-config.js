@@ -20,7 +20,7 @@ module.exports = ( environment = '', file ) => {
 			// to be merged as a presetEnv option
 			callerOpts.caller.modules = false;
 			// to be merged as a pluginTransformRuntime option
-			callerOpts.caller.useESModules = true;
+			callerOpts.caller.useESModules = false;
 			break;
 		default:
 			// preventing measure, this shouldn't happen ever
