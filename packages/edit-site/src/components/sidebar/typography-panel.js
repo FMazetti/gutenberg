@@ -30,9 +30,15 @@ function useHasLineHeightControl( { supports, name } ) {
 }
 
 function useHasAppearenceControl( { supports, name } ) {
-	const fontStyles = useEditorFeature( 'typography.fontStyles', name );
-	const fontWeights = useEditorFeature( 'typography.fontWeights', name );
-	const hasFontAppearance = !! fontStyles?.length && !! fontWeights?.length;
+	const hasFontStyles = useEditorFeature(
+		'typography.customFontStyles',
+		name
+	);
+	const hasFontWeights = useEditorFeature(
+		'typography.customFontWeights',
+		name
+	);
+	const hasFontAppearance = hasFontStyles || hasFontWeights;
 
 	return (
 		hasFontAppearance &&
@@ -52,8 +58,14 @@ export default function TypographyPanel( {
 		name
 	);
 	const fontFamilies = useEditorFeature( 'typography.fontFamilies', name );
-	const fontStyles = useEditorFeature( 'typography.fontStyles', name );
-	const fontWeights = useEditorFeature( 'typography.fontWeights', name );
+	const hasFontStyles = useEditorFeature(
+		'typography.customFontStyles',
+		name
+	);
+	const hasFontWeights = useEditorFeature(
+		'typography.customFontWeights',
+		name
+	);
 	const hasLineHeightEnabled = useHasLineHeightControl( { supports, name } );
 	const hasAppearenceControl = useHasAppearenceControl( { supports, name } );
 
@@ -92,11 +104,12 @@ export default function TypographyPanel( {
 						fontStyle: getStyleProperty( name, 'fontStyle' ),
 						fontWeight: getStyleProperty( name, 'fontWeight' ),
 					} }
-					options={ { fontStyles, fontWeights } }
 					onChange={ ( { fontStyle, fontWeight } ) => {
 						setStyleProperty( name, 'fontStyle', fontStyle );
 						setStyleProperty( name, 'fontWeight', fontWeight );
 					} }
+					hasFontStyles={ hasFontStyles }
+					hasFontWeights={ hasFontWeights }
 				/>
 			) }
 		</PanelBody>
